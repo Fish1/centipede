@@ -33,12 +33,12 @@
     // internet connectivity.
     .dependencies = .{
         .raylib_zig = .{
-            .url = "git+https://github.com/raylib-zig/raylib-zig?ref=devel#4b6a05cd102d51f00523dd5c5e18e628df359d20",
-            .hash = "raylib_zig-5.6.0-dev-KE8REKNmBQDek2Sz27ULioxYpY9IYR0K0CeIC-iJRLCI",
+            .url = "git+https://github.com/raylib-zig/raylib-zig?ref=devel#f25c5173b4c40ef53c7ccf6d8d51ead0892f9f22",
+            .hash = "raylib_zig-6.0.0-KE8REDJ4BQBu7lKwYNt6R4j5ywPeS37zqW6zrtjCcRwH",
         },
         .zflecs = .{
-            .url = "git+https://github.com/Fish1/zflecs?ref=zig_0_16_0#8a4c1219ed2d1d332549f4c7530cbc7eabedf65d",
-            .hash = "zflecs-0.2.0-dev-1PN3ymsOQQCZnq0oV24OD367v5NBdf8NmhK8Tk-ro6pG",
+            .url = "git+https://github.com/ezzieyguywuf/zflecs?ref=wolfgang#61e4a0ee5482765d8cb4571892410812281ec943",
+            .hash = "zflecs-0.2.0-dev-1PN3yssQQQA36jwhXMYCA-y2qA_zLqsW235gtSF15xbm",
         },
     },
     .paths = .{

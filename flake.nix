@@ -27,12 +27,6 @@
 					zls
 				
 					pkgs.libGL
-						# pkgs.libx11
-						# pkgs.libxcursor
-						# pkgs.libxi
-						# pkgs.libxinerama
-						# pkgs.libxrandr
-
 					pkgs.wayland-scanner
 					pkgs.wayland
 					pkgs.libxkbcommon
