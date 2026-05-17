@@ -36,6 +36,12 @@ pub fn main(_: std.process.Init) !void {
     const bullet_query = try flecs.query_init(world, &bullet_desc);
     defer flecs.query_fini(bullet_query);
 
+    var pos_vel_desc = flecs.query_desc_t{};
+    pos_vel_desc.terms[0].id = flecs.id(ecs.Position);
+    pos_vel_desc.terms[1].id = flecs.id(ecs.Velocity);
+    const q = try flecs.query_init(world, &pos_vel_desc);
+    defer flecs.query_fini(q);
+
     while (rl.windowShouldClose() == false) {
         rl.beginDrawing();
         rl.clearBackground(.red);
@@ -51,12 +57,33 @@ pub fn main(_: std.process.Init) !void {
 
         var bullet_it = flecs.query_iter(world, bullet_query);
         while (flecs.query_next(&bullet_it)) {
-            for (bullet_it.entities()) |ent| {
-                _ = ent;
-                std.debug.print("bullet display...\n", .{});
+            const p = flecs.field(&bullet_it, ecs.Position, 0) orelse undefined;
+            for (bullet_it.entities(), 0..) |_, i| {
+                std.debug.print("bullet display... {d}\n", .{i});
+                const x: i32 = @intFromFloat(p[i].x);
+                const y: i32 = @intFromFloat(p[i].y);
+                rl.drawRectangle(x, y, 20, 20, .white);
             }
         }
         rl.endDrawing();
+
+        if (rl.isKeyDown(.space)) {
+            const bullet_entity = flecs.new_id(world);
+            _ = flecs.set(world, bullet_entity, ecs.Position, .{ .x = 200, .y = 200 });
+            _ = flecs.set(world, bullet_entity, ecs.Velocity, .{ .x = 0, .y = 1 });
+            flecs.add(world, bullet_entity, ecs.Bullet);
+        }
+
+        var pvit = flecs.query_iter(world, q);
+        while (flecs.query_next(&pvit)) {
+            // flecs.field(it: *iter_t, comptime T: type, index: i8)
+            const p = flecs.field(&pvit, ecs.Position, 0) orelse undefined;
+            const v = flecs.field(&pvit, ecs.Velocity, 1) orelse undefined;
+            for (pvit.entities(), 0..) |_, index| {
+                p[index].x = p[index].x + v[index].x;
+                p[index].y = p[index].y + v[index].y;
+            }
+        }
     }
 
     rl.closeWindow();
